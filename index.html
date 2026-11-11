@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<script id="ghMove">if(location.hostname==='tom3games.github.io'){location.replace('https://tom3games.com/play/odd-hires/'+location.search+location.hash)}</script>
+<link rel="canonical" href="https://tom3games.com/play/odd-hires/">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<title>へんな子、面接にくる｜面接官になって求人票どおりにハンコを押すゲーム</title>
+<meta name="description" content="面接官になって、へんな子たちを採用するか落とすか決めるブラウザゲーム。壁の求人票に合う子だけ採用、履歴書の写真とちがう替え玉は不採用。まちがい2回でクビ。採用した子は同僚になって邪魔しにくる。">
+<meta property="og:type" content="website">
+<meta property="og:title" content="へんな子、面接にくる">
+<meta property="og:description" content="求人票どおりにハンコを押すだけ。なのに、写真とちがう子、手は心にある子、ただの箱が面接に来る。まちがい2回でクビ。">
+<meta property="og:image" content="https://tom3games.com/play/odd-hires/og.png">
+<meta property="og:url" content="https://tom3games.com/play/odd-hires/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#FBF5E9">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@500;800&family=Yomogi&display=swap" rel="stylesheet">
+<link rel="preload" as="image" href="img/bg.webp">
+<style>
+[hidden]{display:none!important}
+:root{--cream:#FBF5E9;--floor:#F1E6D2;--ink:#2B2B2B;--sky:#7EC8F0;--yellow:#FFD34D;--orange:#FF8A3D;--pink:#FF9EC4;--green:#7BD389;
+  --red:#D23B2C;--indigo:#2F55A4;--wood:#E8C493;--wood2:#D6AC74;--paper:#FFFDF7;
+  --round:"M PLUS Rounded 1c","Hiragino Maru Gothic ProN","Arial Rounded MT Bold",sans-serif;--hand:"Yomogi","Hiragino Maru Gothic ProN",cursive}
+*{box-sizing:border-box;margin:0;padding:0}
+html{touch-action:manipulation;-webkit-text-size-adjust:100%;text-size-adjust:100%;background:var(--cream);height:100%;overflow:hidden}
+body{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;font-family:var(--round);font-weight:500;color:var(--ink);overflow:hidden;height:100%;background:var(--cream);position:fixed;inset:0}
+button{font-family:inherit;color:inherit;border:0;background:none;cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+#app{position:fixed;left:0;right:0;top:0;height:var(--vh,100svh);overflow:hidden}
+.view{position:absolute;inset:0;overflow:hidden}
+.wrap{position:relative;height:100%;max-width:520px;margin:0 auto}
+#boot-err{position:fixed;inset:auto 8px 8px 8px;z-index:99;background:#fff;color:#b00;font:12px/1.4 monospace;white-space:pre-wrap;padding:10px;border-radius:8px}
+
+/* 読み込み（ぷるぷるするプリン） */
+#loading{position:fixed;inset:0;z-index:90;background:var(--cream);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;transition:opacity .35s}
+#loading svg{width:96px;height:84px;transform-origin:50% 100%;animation:wob 0.9s ease-in-out infinite}
+@keyframes wob{0%,100%{transform:scale(1,1)}50%{transform:scale(1.06,.94)}}
+#loading p{font-size:15px;font-weight:800;letter-spacing:.06em}
+#loadBar{width:150px;height:6px;border:2px solid var(--ink);border-radius:6px;overflow:hidden}
+#loadBar i{display:block;height:100%;width:0;background:var(--yellow);transition:width .2s}
+
+/* 右上の小さいボタン */
+#corner{position:absolute;top:calc(8px + env(safe-area-inset-top));right:8px;z-index:40;display:flex;gap:6px}
+#corner button{width:38px;height:38px;border-radius:50%;font-size:13px;font-weight:800;display:flex;align-items:center;justify-content:center;background:rgba(251,245,233,.8);border:2px solid var(--ink)}
+#corner svg{width:18px;height:18px;fill:var(--ink)}
+
+/* タイトル */
+#title{background:var(--cream)}
+#titleCv{position:absolute;inset:0;width:100%;height:100%}
+#titleBox{position:absolute;left:0;right:0;top:34%;padding:0 26px;text-align:left}
+#titleBox h1{font-weight:800;font-size:clamp(34px,10.5vw,50px);line-height:1.14;letter-spacing:.01em}
+#titleBox h1 span{display:block}
+#titleBox h1 .mk{background:linear-gradient(transparent 58%,var(--yellow) 58%,var(--yellow) 90%,transparent 90%)}
+#titleBox p{margin-top:12px;font-size:15px;font-weight:500}
+#tSeal{position:absolute;right:22px;top:-6px;width:74px;height:74px;border-radius:50%;border:4px solid var(--red);color:var(--red);display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:800;transform:rotate(14deg);opacity:.85}
+#titleBtns{position:absolute;left:0;right:0;bottom:calc(9% + env(safe-area-inset-bottom));display:flex;flex-direction:column;align-items:center;gap:10px}
+#bStart{position:relative;min-width:230px;height:62px;padding:0 28px;border-radius:31px;background:var(--ink);color:var(--cream);font-size:19px;font-weight:800;letter-spacing:.04em;box-shadow:0 5px 0 #000}
+#bStart:active{transform:translateY(4px);box-shadow:0 1px 0 #000}
+#bHowT{font-size:14px;font-weight:800;padding:8px 14px;text-decoration:underline;text-underline-offset:4px}
+#bestT{font-size:13px;opacity:.75}
+
+/* 面接室 */
+#play{background:var(--cream)}
+#wall{position:absolute;left:0;right:0;top:0;background:url(img/bg.webp) center bottom/cover no-repeat var(--cream)}
+#notice{position:absolute;background:#fff;border:2.5px solid var(--ink);border-radius:4px;padding:16px 12px 10px;transform:rotate(-1.6deg);transform-origin:50% 0}
+#notice::before{content:"";position:absolute;left:50%;top:-8px;width:16px;height:16px;margin-left:-8px;border-radius:50%;background:var(--pink);border:2.5px solid var(--ink)}
+#notice h2{font-size:15px;font-weight:800;letter-spacing:.3em;text-align:center;margin-bottom:6px;border-bottom:2px dashed rgba(43,43,43,.35);padding-bottom:4px}
+#notice ul{list-style:none;display:flex;flex-direction:column;gap:5px}
+#notice li{display:flex;align-items:center;gap:6px;font-size:16px;font-weight:800;line-height:1.1;white-space:nowrap}
+#notice li .mk{flex:none;width:20px;height:20px;position:relative}
+#notice li .mk.o{border:3.5px solid var(--red);border-radius:50%}
+#notice li .mk.x::before,#notice li .mk.x::after{content:"";position:absolute;left:50%;top:-1px;width:4px;height:22px;margin-left:-2px;background:var(--indigo);border-radius:2px;transform:rotate(45deg)}
+#notice li .mk.x::after{transform:rotate(-45deg)}
+#notice li canvas{flex:none}
+#notice.slap{animation:slap .35s ease-out}
+@keyframes slap{0%{transform:rotate(-8deg) scale(1.15);opacity:.2}100%{transform:rotate(-1.6deg) scale(1);opacity:1}}
+#tally{position:absolute;width:96px;background:#FFE680;padding:8px 8px 7px;transform:rotate(2.5deg);font-family:var(--hand);text-align:center;box-shadow:2px 3px 0 rgba(43,43,43,.15)}
+#tally small{display:block;font-size:13px}
+#tally b{display:block;font-size:30px;line-height:1.05;font-weight:400}
+#tally em{display:block;font-style:normal;font-size:15px;font-weight:700;color:#fff;background:var(--red);border-radius:3px;margin-top:3px;min-height:0}
+#tally em:empty{display:none}
+#tally.hit{animation:thit .5s ease-out}
+@keyframes thit{0%{transform:rotate(-10deg) scale(1.35)}100%{transform:rotate(2.5deg) scale(1)}}
+#room,#fx{position:absolute;left:0;top:0;pointer-events:none}
+#desk{position:absolute;left:0;right:0;bottom:0;background:var(--wood);border-top:3px solid var(--ink)}
+#desk::before{content:"";position:absolute;left:0;right:0;top:0;height:10px;background:var(--wood2);border-bottom:2px solid rgba(43,43,43,.25)}
+#resume{position:absolute;background:var(--paper);border:2px solid var(--ink);border-radius:3px;padding:8px 10px 10px;transform:rotate(-1.4deg);transition:transform .25s}
+#resume.in{animation:rin .35s ease-out}
+@keyframes rin{0%{transform:translateY(120%) rotate(6deg)}100%{transform:rotate(-1.4deg)}}
+#resume.shake{animation:rshake .18s linear infinite}
+@keyframes rshake{0%{transform:rotate(-4deg) translateX(-5px)}50%{transform:rotate(2deg) translateX(5px)}100%{transform:rotate(-4deg) translateX(-5px)}}
+#resume h3{font-size:12px;font-weight:800;letter-spacing:.5em;margin-bottom:6px}
+#resGrid{display:flex;gap:9px;align-items:flex-start}
+#photoBox{flex:none;border:1.5px solid var(--ink);background:#EAF3F8;position:relative;overflow:hidden}
+#photoBox canvas{display:block}
+#resFields{flex:1;min-width:0;display:flex;flex-direction:column;gap:6px}
+.fld{border-bottom:1.5px solid rgba(43,43,43,.35);padding-bottom:3px}
+.fld small{display:block;font-size:10px;font-weight:800;opacity:.6}
+.fld span{display:block;font-family:var(--hand);font-size:17px;line-height:1.15;word-break:break-all}
+.seal{position:absolute;right:6px;bottom:6px;width:64px;height:64px;border-radius:50%;border:3.5px solid currentColor;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;letter-spacing:.02em;opacity:.88;mix-blend-mode:multiply;pointer-events:none}
+.seal.pop{animation:sealIn .22s ease-out}
+@keyframes sealIn{0%{transform:scale(1.6) rotate(var(--r));opacity:0}100%{transform:scale(1) rotate(var(--r));opacity:.88}}
+#stamps{position:absolute;display:flex;flex-direction:column;gap:12px;align-items:center}
+.stamp{position:relative;display:flex;flex-direction:column;align-items:center}
+.stamp .face{width:84px;height:84px;border-radius:50%;background:#fff;border:3px solid var(--ink);display:flex;align-items:center;justify-content:center;box-shadow:0 5px 0 var(--ink)}
+.stamp .ring{width:66px;height:66px;border-radius:50%;border:3.5px solid currentColor;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:18px;line-height:1}
+#bHire{color:var(--red)}#bNo{color:var(--indigo)}
+.stamp:active .face,.stamp.press .face{transform:translateY(4px);box-shadow:0 1px 0 var(--ink)}
+.stamp[disabled]{opacity:.55}
+#bubble{position:absolute;z-index:30;max-width:62%;background:#fff;border:2.5px solid var(--ink);border-radius:16px;padding:7px 12px;font-size:16px;font-weight:800;line-height:1.3;pointer-events:none;opacity:0;transform:scale(.85);transition:opacity .12s,transform .12s;white-space:nowrap}
+#bubble.on{opacity:1;transform:scale(1)}
+#bubble::after{content:"";position:absolute;left:var(--tx,18px);bottom:-10px;width:14px;height:14px;background:#fff;border-right:2.5px solid var(--ink);border-bottom:2.5px solid var(--ink);transform:rotate(45deg)}
+#bubble.down::after{bottom:auto;top:-10px;transform:rotate(225deg)}
+#bubble.boss{background:var(--yellow)}
+#bubble.boss::after{background:var(--yellow)}
+#shoo{position:absolute;z-index:25;border-radius:50%;pointer-events:auto}
+#hint{position:absolute;z-index:35;pointer-events:none;display:flex;flex-direction:column;align-items:center;gap:2px}
+#hint b{background:var(--ink);color:var(--cream);font-size:14px;font-weight:800;padding:4px 10px;border-radius:12px;white-space:nowrap}
+#hint svg{width:34px;height:34px;animation:poke .8s ease-in-out infinite}
+@keyframes poke{0%,100%{transform:translateY(0)}50%{transform:translateY(7px)}}
+#flash{position:absolute;inset:0;background:var(--red);opacity:0;pointer-events:none;z-index:28}
+#flash.on{animation:fl .5s ease-out}
+@keyframes fl{0%{opacity:.32}100%{opacity:0}}
+
+/* 結果（解雇通知書） */
+#result{background:#EFE6D6;display:flex;flex-direction:column;align-items:center}
+#resultIn{position:relative;width:100%;height:100%;max-width:520px;display:flex;flex-direction:column;align-items:center;padding:calc(14px + env(safe-area-inset-top)) 14px calc(10px + env(safe-area-inset-bottom))}
+#paper{position:relative;flex:1;min-height:0;width:100%;background:var(--paper);border:2px solid var(--ink);padding:14px 16px 10px;display:flex;flex-direction:column;transform:rotate(-.6deg);overflow:hidden}
+#paper h2{font-size:21px;font-weight:800;letter-spacing:.35em;text-align:center}
+#paper .lead{font-size:13px;margin-top:6px;text-align:center}
+#paper .rsn{font-family:var(--hand);font-size:15px;margin-top:6px;text-align:center}
+#paper .num{position:relative;display:flex;align-items:baseline;justify-content:center;gap:6px;margin-top:4px}
+#paper .num small{font-size:13px;font-weight:800}
+#paper .num b{font-size:52px;font-weight:800;line-height:1}
+#paper .rank{text-align:center;font-size:19px;font-weight:800;margin-top:2px}
+#paper .rank span{background:linear-gradient(transparent 55%,var(--yellow) 55%)}
+#paper .team{flex:1;min-height:0;display:flex;flex-direction:column;align-items:center;margin-top:6px}
+#paper .team small{font-size:12px;font-weight:800;opacity:.7}
+#teamCv{flex:1;min-height:0;width:100%}
+#paper .boss{display:flex;align-items:center;gap:8px;margin-top:4px}
+#paper .boss img{width:54px;height:auto;flex:none}
+#paper .boss p{font-family:var(--hand);font-size:15px;background:#fff;border:2px solid var(--ink);border-radius:12px;padding:5px 10px}
+#bossSeal{position:absolute;right:2px;top:-4px;width:58px;height:58px;border-radius:50%;border:3px solid var(--red);color:var(--red);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:15px;transform:rotate(12deg);opacity:.85}
+#newBest{position:absolute;left:0;top:10px;font-size:12px;font-weight:800;background:var(--yellow);border:2px solid var(--ink);padding:2px 8px;border-radius:10px;transform:rotate(-6deg)}
+#resBtns{flex:none;width:100%;display:flex;flex-direction:column;align-items:center;gap:6px;margin-top:10px}
+#resRow{display:flex;gap:8px}
+#resRow button{height:40px;padding:0 14px;border-radius:20px;border:2px solid var(--ink);background:#fff;font-size:14px;font-weight:800}
+#bAgain{min-width:210px;height:54px;border-radius:27px;background:var(--ink);color:var(--cream);font-size:18px;font-weight:800;box-shadow:0 4px 0 #000}
+#bAgain:active{transform:translateY(3px);box-shadow:0 1px 0 #000}
+
+/* 遊び方 */
+#how{position:fixed;inset:0;z-index:60;background:rgba(43,43,43,.45);display:flex;align-items:center;justify-content:center;padding:16px}
+#howIn{width:100%;max-width:420px;max-height:calc(var(--vh,100svh) - 32px);overflow:hidden;background:var(--paper);border:2.5px solid var(--ink);border-radius:6px;padding:18px 18px 14px;display:flex;flex-direction:column;gap:10px}
+#howIn h2{font-size:19px;font-weight:800}
+#howOl{padding-left:20px;display:flex;flex-direction:column;gap:9px;font-size:15px;line-height:1.55}
+#howCr{font-size:11px;opacity:.6}
+#bHowClose{align-self:center;height:44px;min-width:140px;border-radius:22px;background:var(--ink);color:var(--cream);font-size:15px;font-weight:800}
+@media (max-height:700px){
+  #titleBox{top:30%}
+  #notice li{font-size:14px}
+  .stamp .face{width:72px;height:72px}.stamp .ring{width:56px;height:56px;font-size:16px}
+  #paper .num b{font-size:42px}
+  #howOl{font-size:14px;gap:6px}
+}
+</style>
+</head>
+<body>
+<div id="loading"><svg viewBox="0 0 96 84" aria-hidden="true"><path d="M20 22 Q48 8 76 22 L86 68 Q90 78 78 78 Q70 72 62 78 Q54 72 48 78 Q40 72 32 78 Q24 72 18 78 Q6 78 10 68 Z" fill="#FFD34D" stroke="#2B2B2B" stroke-width="3.5" stroke-linejoin="round"/><circle cx="48" cy="44" r="10" fill="#fff" stroke="#2B2B2B" stroke-width="3"/><circle cx="48" cy="45" r="4.5" fill="#2B2B2B"/><path d="M42 60 h12" stroke="#2B2B2B" stroke-width="3" stroke-linecap="round"/></svg><p id="loadTxt">面接会場を準備中</p><div id="loadBar"><i></i></div></div>
+<div id="app">
+  <main id="title" class="view"><div class="wrap">
+    <canvas id="titleCv"></canvas>
+    <div id="titleBox"><h1><span id="t1">へんな子、</span><span id="t2" class="mk">面接にくる</span></h1><p id="tCatch">求人票どおりに、ハンコを押すだけ。</p><div id="tSeal">採用</div></div>
+    <div id="titleBtns"><button id="bStart">面接をはじめる</button><button id="bHowT">遊び方</button><span id="bestT"></span></div>
+  </div></main>
+  <main id="play" class="view" hidden><div class="wrap" id="stage">
+    <div id="wall"></div>
+    <div id="notice"><h2 id="noticeH">募集</h2><ul id="noticeUl"></ul></div>
+    <div id="tally"><small id="tallyL">さばいた</small><b id="tallyN">0</b><em id="tallyM"></em></div>
+    <canvas id="room"></canvas>
+    <div id="desk">
+      <div id="resume"><h3 id="resH">履歴書</h3><div id="resGrid"><div id="photoBox"><canvas id="photo"></canvas></div>
+        <div id="resFields"><div class="fld"><small id="fName">氏名</small><span id="vName"></span></div><div class="fld"><small id="fSkill">特技</small><span id="vSkill"></span></div></div></div></div>
+      <div id="stamps">
+        <button class="stamp" id="bHire" aria-label="hire"><span class="face"><span class="ring" id="sHire">採用</span></span></button>
+        <button class="stamp" id="bNo" aria-label="reject"><span class="face"><span class="ring" id="sNo">不採用</span></span></button>
+      </div>
+    </div>
+    <canvas id="fx"></canvas>
+    <button id="shoo" hidden aria-label="shoo"></button>
+    <div id="bubble"></div>
+    <div id="hint" hidden><b id="hintT"></b><svg viewBox="0 0 34 34"><path d="M17 31 L6 16 h7 V3 h8 v13 h7 Z" fill="#FFD34D" stroke="#2B2B2B" stroke-width="2.5" stroke-linejoin="round"/></svg></div>
+    <div id="flash"></div>
+  </div></main>
+  <main id="result" class="view" hidden><div id="resultIn">
+    <div id="paper">
+      <h2 id="rH">解雇通知書</h2>
+            <p class="lead" id="rLead"></p>
+      <p class="rsn" id="rReason"></p>
+      <div class="num"><small id="rHandled">さばいた人数</small><b id="rNum">0</b><small id="rUnit">人</small><div id="bossSeal">社長</div><div id="newBest" hidden></div></div>
+      <div class="rank"><span id="rRank"></span></div>
+      <div class="team"><small id="rTeam"></small><canvas id="teamCv"></canvas></div>
+      <div class="boss"><img src="img/boss.webp" alt=""><p id="rBoss"></p></div>
+    </div>
+    <div id="resBtns"><div id="resRow"><button id="bSave">画像で保存</button><button id="bPost">Xでポスト</button><button id="bTitle">タイトルへ</button></div><button id="bAgain">もう一回</button></div>
+  </div></main>
+  <div id="corner"><button id="bMute" aria-label="sound"><svg viewBox="0 0 24 24"><path id="mIcon" d="M4 9v6h4l5 4V5L8 9H4zm12.5 3a4.5 4.5 0 0 0-2.5-4v8a4.5 4.5 0 0 0 2.5-4z"/></svg></button><button id="bLang">EN</button><button id="bHelp" aria-label="help">?</button></div>
+  <div id="how" hidden><div id="howIn"><h2 id="howH">遊び方</h2><ol id="howOl"></ol><p id="howCr"></p><button id="bHowClose">とじる</button></div></div>
+</div>
+<script>
+(function(){
+  var opt={passive:false};
+  ['gesturestart','gesturechange','gestureend'].forEach(function(n){document.addEventListener(n,function(e){e.preventDefault()},opt)});
+  document.addEventListener('touchmove',function(e){if(e.touches&&e.touches.length>1)e.preventDefault()},opt);
+  var last=0;document.addEventListener('touchend',function(e){var n=Date.now();if(n-last<300&&!(e.target.closest&&e.target.closest('button,a')))e.preventDefault();last=n},opt);
+  document.addEventListener('dblclick',function(e){e.preventDefault()},opt);
+  window.addEventListener('wheel',function(e){if(e.ctrlKey)e.preventDefault()},opt);
+  window.addEventListener('keydown',function(e){if((e.ctrlKey||e.metaKey)&&['+','-','=','0',';'].indexOf(e.key)>=0)e.preventDefault()});
+})();
+// 起動失敗の保険。JS が動いたか（__jsUp）で判定し、読み込み中は失敗と出さない
+(function(){
+  var errs=[];
+  window.addEventListener('error',function(e){errs.push((e.message||'error')+' @'+(e.filename||'')+':'+(e.lineno||''))});
+  window.addEventListener('unhandledrejection',function(e){errs.push('reject: '+(e.reason&&e.reason.message||e.reason))});
+  setTimeout(function(){
+    if(window.__jsUp) return;
+    var d=document.createElement('div');d.id='boot-err';
+    d.textContent='起動できませんでした / failed to start\n'+(errs.join('\n')||'(no error captured)')+'\n'+navigator.userAgent;
+    document.body.appendChild(d);
+  },6000);
+})();
+</script>
+<script src="tm.js?v=1" data-game="odd-hires"></script>
+<script src="sfx.js?v=1"></script>
+<script src="data.js?v=1"></script>
+<script src="logic.js?v=1"></script>
+<script src="game.js?v=1"></script>
+<script src="support.js?v=1" data-ja="プリン" data-en="a pudding"></script>
+</body>
+</html>

@@ -1,0 +1,33 @@
+- snd/acoustic_comedy.mp3: Comedy Funny Background Song / Almitory / CC-BY 3.0,CC-BY 4.0,CC-BY-SA 3.0,CC-BY-SA 4.0,CC0,GPL 2.0,GPL 3.0,OGA-BY 3.0
+- snd/Clock_ticking.mp3: File:Clock ticking.ogg / natalie / Public domain
+- snd/door_open.mp3: 100 CC0 SFX / rubberduck / CC0
+- snd/door_close_01.mp3: 100 CC0 SFX / rubberduck / CC0
+- snd/door_close_03.mp3: 100 CC0 SFX / rubberduck / CC0
+- snd/paper_01.mp3: 100 CC0 SFX / rubberduck / CC0
+- snd/paper_02.mp3: 100 CC0 SFX / rubberduck / CC0
+- snd/paper_03.mp3: 100 CC0 SFX / rubberduck / CC0
+- snd/bookPlace1.mp3: 50 RPG sound effects / Kenney / CC0
+- snd/bookPlace2.mp3: 50 RPG sound effects / Kenney / CC0
+- snd/bookPlace3.mp3: 50 RPG sound effects / Kenney / CC0
+- snd/squeak1.mp3: Squeak toy sounds / bart / CC0
+- snd/squeak2.mp3: Squeak toy sounds / bart / CC0
+- snd/squeak3.mp3: Squeak toy sounds / bart / CC0
+- snd/pop1.mp3: 3 Pop Sounds / wubitog / CC0
+- snd/pop2.mp3: 3 Pop Sounds / wubitog / CC0
+- snd/pop3.mp3: 3 Pop Sounds / wubitog / CC0
+- snd/weird_02.mp3: 30 weird CC0 SFX / rubberduck / CC0
+- snd/weird_04.mp3: 30 weird CC0 SFX / rubberduck / CC0
+- snd/weird_13.mp3: 30 weird CC0 SFX / rubberduck / CC0
+- snd/weird_23.mp3: 30 weird CC0 SFX / rubberduck / CC0
+- snd/weird_16.mp3: 30 weird CC0 SFX / rubberduck / CC0
+- snd/spring_03.mp3: 100 CC0 SFX / rubberduck / CC0
+- snd/spring_04.mp3: 100 CC0 SFX / rubberduck / CC0
+- snd/SAX00.mp3: 85 Short music jingles / Kenney / CC0
+- snd/SAX04.mp3: 85 Short music jingles / Kenney / CC0
+- snd/SAX07.mp3: 85 Short music jingles / Kenney / CC0
+- snd/PIZZA07.mp3: 85 Short music jingles / Kenney / CC0
+- snd/PIZZA03.mp3: 85 Short music jingles / Kenney / CC0
+- snd/grunt_01.mp3: Little Grunts / crueltyinc / CC0
+- snd/grunt_02.mp3: Little Grunts / crueltyinc / CC0
+- snd/grunt_03.mp3: Little Grunts / crueltyinc / CC0
+- snd/wood_hit_01.mp3: 75 CC0 breaking / falling / hit sfx / rubberduck / CC0
