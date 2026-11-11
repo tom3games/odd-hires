@@ -53,7 +53,7 @@ button{font-family:inherit;color:inherit;border:0;background:none;cursor:pointer
 #titleBox h1 .mk{background:linear-gradient(transparent 58%,var(--yellow) 58%,var(--yellow) 90%,transparent 90%)}
 #titleBox p{margin-top:12px;font-size:15px;font-weight:500}
 #tSeal{position:absolute;right:22px;top:-6px;width:74px;height:74px;border-radius:50%;border:4px solid var(--red);color:var(--red);display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:800;transform:rotate(14deg);opacity:.85}
-#titleBtns{position:absolute;left:0;right:0;bottom:calc(9% + env(safe-area-inset-bottom));display:flex;flex-direction:column;align-items:center;gap:10px}
+#titleBtns{position:absolute;left:0;right:0;bottom:calc(9% + calc(env(safe-area-inset-bottom) + var(--inapp-bot,0px)));display:flex;flex-direction:column;align-items:center;gap:10px}
 #bStart{position:relative;min-width:230px;height:62px;padding:0 28px;border-radius:31px;background:var(--ink);color:var(--cream);font-size:19px;font-weight:800;letter-spacing:.04em;box-shadow:0 5px 0 #000}
 #bStart:active{transform:translateY(4px);box-shadow:0 1px 0 #000}
 #bHowT{font-size:14px;font-weight:800;padding:8px 14px;text-decoration:underline;text-underline-offset:4px}
@@ -124,7 +124,7 @@ button{font-family:inherit;color:inherit;border:0;background:none;cursor:pointer
 
 /* 結果（解雇通知書） */
 #result{background:#EFE6D6;display:flex;flex-direction:column;align-items:center}
-#resultIn{position:relative;width:100%;height:100%;max-width:520px;display:flex;flex-direction:column;align-items:center;padding:calc(14px + env(safe-area-inset-top)) 14px calc(10px + env(safe-area-inset-bottom))}
+#resultIn{position:relative;width:100%;height:100%;max-width:520px;display:flex;flex-direction:column;align-items:center;padding:calc(14px + env(safe-area-inset-top)) 14px calc(10px + calc(env(safe-area-inset-bottom) + var(--inapp-bot,0px)))}
 #paper{position:relative;flex:1;min-height:0;width:100%;background:var(--paper);border:2px solid var(--ink);padding:14px 16px 10px;display:flex;flex-direction:column;transform:rotate(-.6deg);overflow:hidden}
 #paper h2{font-size:21px;font-weight:800;letter-spacing:.35em;text-align:center}
 #paper .lead{font-size:13px;margin-top:6px;text-align:center}
@@ -233,7 +233,7 @@ button{font-family:inherit;color:inherit;border:0;background:none;cursor:pointer
 <script src="sfx.js?v=1"></script>
 <script src="data.js?v=1"></script>
 <script src="logic.js?v=1"></script>
-<script src="game.js?v=1"></script>
-<script src="support.js?v=1" data-ja="プリン" data-en="a pudding"></script>
+<script src="game.js?v=2"></script>
+<script src="support.js?v=2" data-ja="プリン" data-en="a pudding"></script>
 </body>
 </html>

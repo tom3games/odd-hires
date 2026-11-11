@@ -161,7 +161,9 @@
     setVh()
     const W = stage.clientWidth || Math.min(innerWidth, 520), H = stage.clientHeight || innerHeight
     L.W = W; L.H = H
-    L.deskTop = Math.round(H * (H < 700 ? 0.6 : 0.61))
+    // X のアプリの中は下の帯（--inapp-bot）の分だけ机の上を詰めて、ハンコを帯より上に置く
+    const IB = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--inapp-bot')) || 0, HE = H - IB
+    L.deskTop = Math.round(HE * (HE < 700 ? 0.6 : 0.61))
     $('#wall').style.height = L.deskTop + 'px'
     $('#desk').style.top = L.deskTop + 'px'
     for (const c of [room, fx]) { c.width = Math.round(W * DPR); c.height = Math.round(H * DPR); c.style.width = W + 'px'; c.style.height = H + 'px' }
@@ -170,8 +172,8 @@
     Object.assign($('#tally').style, { right: '16px', top: (H < 700 ? 56 : 62) + 'px' })
     L.bodyH = Math.min(H * 0.27, W * 0.5)
     L.cx = W * 0.52; L.by = L.deskTop + L.bodyH * 0.17
-    const deskH = H - L.deskTop, stW = H < 700 ? 82 : 94
-    Object.assign($('#stamps').style, { right: '12px', top: Math.round((deskH - (H < 700 ? 166 : 190)) / 2 + 6) + 'px', width: stW + 'px' })
+    const deskH = HE - L.deskTop, stW = HE < 700 ? 82 : 94
+    Object.assign($('#stamps').style, { right: '12px', top: Math.round((deskH - (HE < 700 ? 166 : 190)) / 2 + 6) + 'px', width: stW + 'px' })
     const rw = W - stW - 12 - 12 - 14
     Object.assign($('#resume').style, { left: '12px', top: Math.round(Math.max(18, deskH * 0.1)) + 'px', width: rw + 'px' })
     const pw = Math.round(rw * 0.4), ph = Math.round(pw * 1.22)
@@ -181,6 +183,7 @@
     const tc = $('#titleCv'); tc.width = Math.round(W * DPR); tc.height = Math.round(H * DPR)
   }
   addEventListener('resize', layout)
+  addEventListener('load', layout) // X の印は support.js（後から読む）が付ける
 
   // ---------- 文言 ----------
   function condLine(c) {
